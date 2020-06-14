@@ -1,15 +1,25 @@
+# project/db_create.py
+
+
 import sqlite3
 from _config import DATABASE_PATH
 
 with sqlite3.connect(DATABASE_PATH) as connection:
+
+    # get a cursor object used to execute SQL commands
     c = connection.cursor()
 
-    c.execute("""CREATE TABLE contacts(name_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL, email TEXT NOT NULL, tnumber INTEGER NOT NULL)""")
+    # create the table
+    c.execute("""CREATE TABLE tasks(task_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL, due_date TEXT NOT NULL, priority INTEGER NOT NULL,
+        status INTEGER NOT NULL)""")
 
-    c.execute('INSERT INTO contacts(name, email, tnumber)'
-              'VALUES("dima", "chuprin-dmitriy@mail.ru", "89023188689")')
-
-    c.execute('INSERT INTO contacts(name, email, tnumber)'
-              'VALUES("olga", "olga-chuprina@mail.ru", "89109891234")')
-
+    # insert dummy data into the table
+    c.execute(
+        'INSERT INTO tasks (name, due_date, priority, status)'
+        'VALUES("Finish this tutorial", "03/25/2015", 10, 1)'
+    )
+    c.execute(
+        'INSERT INTO tasks (name, due_date, priority, status)'
+        'VALUES("Finish Real Python Course 2", "03/25/2015", 10, 1)'
+    )
